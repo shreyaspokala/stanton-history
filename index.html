@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Reform Gazette — Elizabeth Cady Stanton</title>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#1a1008;--paper:#f5eed8;--paper-dk:#ede3c4;--rule:#3a2a10;
+      --accent:#7a1a10;--mid:#5a3a18;--gold:#c9a84c;
+    }
+    html{scroll-behavior:smooth}
+    body{background:#c8b89a;font-family:'Lora',serif;color:var(--ink)}
+
+    /* ── NEWSPAPER SHELL ── */
+    .newspaper{max-width:960px;margin:0 auto;background:var(--paper);border:2px solid var(--rule);box-shadow:4px 4px 24px rgba(0,0,0,.35)}
+
+    /* ── MASTHEAD ── */
+    .masthead{border-bottom:5px double var(--rule);padding:16px 24px 10px;text-align:center}
+    .mast-top{display:flex;justify-content:space-between;font-family:'IM Fell English',serif;font-size:.72rem;color:var(--mid);border-bottom:1px solid var(--rule);padding-bottom:5px;margin-bottom:5px;flex-wrap:wrap;gap:4px}
+    .paper-name{font-family:'UnifrakturMaguntia',cursive;font-size:clamp(2.2rem,6vw,4rem);line-height:1;color:var(--ink)}
+    .tagline{font-family:'IM Fell English',serif;font-style:italic;font-size:.82rem;color:var(--mid);margin-top:3px}
+
+    /* ── HERO ── */
+    .hero{padding:20px 24px 12px;text-align:center;border-bottom:3px solid var(--rule)}
+    .hero .badge{display:inline-block;background:var(--rule);color:var(--paper);font-family:'Playfair Display',serif;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;padding:3px 10px;margin-bottom:8px}
+    .hero h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(1.6rem,4.5vw,2.6rem);line-height:1.15}
+    .hero .deck{font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;color:var(--mid);margin-top:6px}
+    .hero .byline{font-family:'IM Fell English',serif;font-size:.78rem;color:var(--mid);margin-top:4px}
+
+    /* ── THESIS ── */
+    .thesis{margin:0 24px;padding:14px 18px;border-left:5px solid var(--accent);border-right:5px solid var(--accent);background:var(--paper-dk);text-align:center;border-bottom:2px solid var(--rule)}
+    .thesis .label{font-family:'Playfair Display',serif;font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:700}
+    .thesis blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;line-height:1.6;margin-top:6px}
+
+    /* ── TAB NAV ── */
+    .tab-nav{display:flex;flex-wrap:wrap;gap:0;background:var(--rule);margin:0;position:sticky;top:0;z-index:100}
+    .tab-btn{flex:1;min-width:120px;padding:10px 8px;border:none;background:var(--rule);color:var(--paper);font-family:'Playfair Display',serif;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .25s,color .25s;text-align:center;border-right:1px solid rgba(245,238,216,.15)}
+    .tab-btn:last-child{border-right:none}
+    .tab-btn:hover{background:#5a3a18}
+    .tab-btn.active{background:var(--paper);color:var(--ink)}
+
+    /* ── TAB PANELS ── */
+    .tab-panel{display:none;padding:20px 24px 28px;min-height:300px}
+    .tab-panel.active{display:block}
+
+    /* ── SECTION HEADERS ── */
+    .sec-head{text-align:center;margin-bottom:16px}
+    .sec-head .stage-num{font-family:'IM Fell English',serif;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+    .sec-head h2{font-family:'Playfair Display',serif;font-weight:900;font-size:1.6rem;margin-top:2px}
+    .sec-head .sub{font-family:'IM Fell English',serif;font-style:italic;font-size:.88rem;color:var(--mid);margin-top:2px}
+    .rule-thin{border:none;border-top:1px solid var(--rule);margin:14px 0}
+
+    /* ── CARD GRID ── */
+    .card-grid{display:grid;gap:16px;margin-top:14px}
+    .g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .g3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+    /* ── FLIP CARD ── */
+    .flip-card{perspective:800px;height:210px;cursor:pointer}
+    .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+    .flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+    .flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border:2px solid var(--rule);padding:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+    .flip-front{background:var(--paper-dk)}
+    .flip-front h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px}
+    .flip-front .hint{font-size:.68rem;color:var(--mid);font-style:italic;margin-top:8px}
+    .flip-back{background:var(--rule);color:var(--paper);transform:rotateY(180deg);font-size:.82rem;line-height:1.55;overflow-y:auto}
+    .flip-back strong{color:var(--gold)}
+
+    /* ── CLICKABLE TIMELINE ── */
+    .timeline{list-style:none;padding:0;position:relative;margin-top:10px}
+    .timeline::before{content:'';position:absolute;left:44px;top:0;bottom:0;width:3px;background:var(--rule)}
+    .tl-item{position:relative;padding-left:76px;margin-bottom:6px;cursor:pointer}
+    .tl-item .dot{position:absolute;left:37px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--paper);border:3px solid var(--accent);transition:background .3s,transform .3s;z-index:2}
+    .tl-item.open .dot{background:var(--accent);transform:scale(1.25)}
+    .tl-year{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--accent)}
+    .tl-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;display:inline;margin-left:6px}
+    .tl-arrow{display:inline-block;margin-left:4px;font-size:.7rem;transition:transform .3s;color:var(--mid)}
+    .tl-item.open .tl-arrow{transform:rotate(90deg)}
+    .tl-detail{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;font-size:.82rem;line-height:1.6;color:var(--mid);padding:0}
+    .tl-item.open .tl-detail{max-height:200px;padding:6px 0 10px}
+
+    /* ── INFO BOX ── */
+    .info-box{border:2px solid var(--rule);padding:12px 14px;background:var(--paper-dk);margin-top:12px}
+    .info-box h4{font-family:'Playfair Display',serif;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--rule);padding-bottom:4px;margin-bottom:8px;color:var(--accent)}
+    .info-box ul{list-style:none;padding:0}
+    .info-box li{font-size:.8rem;line-height:1.55;padding:3px 0 3px 14px;border-bottom:1px dotted #b0a080;position:relative}
+    .info-box li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem}
+    .info-box li:last-child{border-bottom:none}
+
+    /* ── PULL QUOTE ── */
+    .pull-quote{border-top:3px solid var(--rule);border-bottom:3px solid var(--rule);padding:10px 14px;margin:16px 0;text-align:center}
+    .pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;line-height:1.5;color:var(--accent)}
+    .pull-quote .attr{font-size:.72rem;color:var(--mid);font-style:normal;margin-top:4px;display:block}
+
+    /* ── SHORT TEXT BLOCKS ── */
+    .blurb{font-size:.88rem;line-height:1.65;margin-bottom:10px;max-width:620px}
+    .blurb-center{text-align:center;margin-left:auto;margin-right:auto}
+
+    /* ── STAT ROW ── */
+    .stat-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px 0}
+    .stat{text-align:center;background:var(--paper-dk);border:1px solid var(--rule);padding:10px 16px;min-width:130px;flex:1}
+    .stat .num{font-family:'Playfair Display',serif;font-weight:900;font-size:1.6rem;color:var(--accent)}
+    .stat .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--mid);margin-top:2px}
+
+    /* ── SCROLL ANIMATION ── */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    /* ── WORKS CITED ── */
+    .works-cited{margin:0 24px 0;padding:16px;border:2px solid var(--rule);background:var(--paper-dk)}
+    .works-cited h3{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-align:center;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:12px}
+    .works-cited p{font-size:.76rem;line-height:1.55;margin-bottom:8px;padding-left:2em;text-indent:-2em}
+
+    /* ── FOOTER ── */
+    .footer{text-align:center;font-family:'IM Fell English',serif;font-size:.7rem;color:var(--mid);padding:12px 24px;border-top:2px double var(--rule);margin-top:20px}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:600px){
+      .tab-btn{font-size:.6rem;padding:8px 4px;min-width:0;letter-spacing:.5px}
+      .flip-card{height:190px}
+      .timeline::before{left:28px}
+      .tl-item{padding-left:56px}
+      .tl-item .dot{left:21px;width:16px;height:16px}
+      .hero h1{font-size:1.5rem}
+      .stat{min-width:100px}
+    }
+  </style>
+</head>
+<body>
+<div class="newspaper">
+
+  <!-- ══ MASTHEAD ══ -->
+  <header class="masthead">
+    <div class="mast-top">
+      <span>Vol. I · No. 1</span>
+      <span>United States History I · Reform Research Project</span>
+      <span>Shreyas Pokala · 2026</span>
+    </div>
+    <div class="paper-name">The Reform Gazette</div>
+    <div class="tagline">&ldquo;Dedicated to the truths that shall make us free&rdquo;</div>
+  </header>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="badge">Civic Action Project · Women&rsquo;s Rights Reform</div>
+    <h1>The Woman Who Declared Independence</h1>
+    <div class="deck">How Elizabeth Cady Stanton sparked a movement that changed the course of American history</div>
+    <div class="byline">By Shreyas Pokala &nbsp;|&nbsp; Reform Era, 1820–1860</div>
+  </section>
+
+  <!-- ══ THESIS ══ -->
+  <div class="thesis reveal">
+    <div class="label">Thesis</div>
+    <blockquote>
+      Elizabeth Cady Stanton was highly effective in challenging the legal and social inequalities
+      facing women in nineteenth century America; through the Seneca Falls Convention, the
+      Declaration of Sentiments, and the founding of national suffrage organizations, she
+      transformed personal outrage into a powerful national movement that permanently reshaped
+      American law and society.
+    </blockquote>
+  </div>
+
+  <!-- ══ TAB NAV ══ -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="issue" role="tab">I · Identify</button>
+    <button class="tab-btn" data-tab="research" role="tab">II · Research</button>
+    <button class="tab-btn" data-tab="plan" role="tab">III · Plan</button>
+    <button class="tab-btn" data-tab="action" role="tab">IV · Action</button>
+    <button class="tab-btn" data-tab="reflect" role="tab">V · Reflect</button>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!--  TAB 1 — IDENTIFY AN ISSUE                      -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="tab-panel active" id="issue">
+    <div class="sec-head reveal">
+      <div class="stage-num">Stage I</div>
+      <h2>Identify an Issue</h2>
+      <div class="sub">What was going on in America — and why did Stanton act?</div>
+    </div>
+
+    <p class="blurb blurb-center reveal">
+      In early 19th-century America, women had almost no legal identity.
+      Marriage stripped them of their property, wages, and custody rights.
+      Voting was out of the question. Even reform movements fighting for freedom excluded them.
+    </p>
+
+    <div class="card-grid g3 reveal">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>No Legal Rights</h3>
+            <p style="font-size:.8rem;color:var(--mid)">Property, wages &amp; children</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            An unmarried woman could own property, keep wages, and retain custody of children.
+            <strong>Once married, all of these rights vanished.</strong> She became legally invisible.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>No Political Voice</h3>
+            <p style="font-size:.8rem;color:var(--mid)">Voting &amp; representation</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Women could not vote in any election — local, state, or federal.
+            They were <strong>excluded from political conventions</strong> and had no way to influence the laws governing their lives.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>No Escape</h3>
+            <p style="font-size:.8rem;color:var(--mid)">Marriage &amp; divorce traps</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Divorce laws heavily favored men. Women in abusive marriages had almost <strong>no legal way out</strong>.
+            Separation without divorce left them with no property, no income, and no freedom.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote reveal" style="margin-top:20px">
+      <p>&ldquo;Men wrote the marriage code — and it is unjust to women.&rdquo;</p>
+      <span class="attr">— E.C. Stanton, Address on the NY Divorce Bill, 1861</span>
+    </div>
+
+    <hr class="rule-thin">
+    <p class="blurb blurb-center reveal" style="font-style:italic;color:var(--mid);font-size:.82rem">
+      The fight for women&rsquo;s suffrage began within the broader reform movements of the mid-1800s.
+      Leaders disagreed on methods — federal vs. state, petitions vs. protests — but Stanton was determined to act.
+    </p>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!--  TAB 2 — RESEARCH & INVESTIGATE                 -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="research">
+    <div class="sec-head reveal">
+      <div class="stage-num">Stage II</div>
+      <h2>Research &amp; Investigate</h2>
+      <div class="sub">Who was Elizabeth Cady Stanton?</div>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="stat-row reveal">
+      <div class="stat"><div class="num">1815</div><div class="lbl">Born</div></div>
+      <div class="stat"><div class="num">1902</div><div class="lbl">Died</div></div>
+      <div class="stat"><div class="num">7</div><div class="lbl">Children</div></div>
+      <div class="stat"><div class="num">1848</div><div class="lbl">Seneca Falls</div></div>
+    </div>
+
+    <!-- Flip biography cards -->
+    <div class="card-grid g2 reveal">
+      <div class="flip-card" style="height:230px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Early Life</h3>
+            <p style="font-size:.8rem;color:var(--mid)">Family, education &amp; influences</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Born in Johnstown, NY — <strong>8th of 11 children</strong> (only 6 survived). Her father was a prominent attorney and congressman.
+            She studied math, Greek, and Latin at Johnstown Academy — rare for women at the time.
+            Graduated from Troy Female Seminary in 1832.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="height:230px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>What Radicalized Her</h3>
+            <p style="font-size:.8rem;color:var(--mid)">From observer to activist</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Her father showed her how <strong>law treated women unequally</strong>.
+            In 1840, she married abolitionist Henry Stanton — and removed &ldquo;obey&rdquo; from her vows.
+            That same year, women were <strong>refused recognition</strong> at the World Anti-Slavery Convention in London.
+            This hypocrisy ignited her fight.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="height:230px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Key Allies</h3>
+            <p style="font-size:.8rem;color:var(--mid)">The people who stood with her</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            <strong>Lucretia Mott</strong> — co-organized Seneca Falls; met at the 1840 London convention.<br><br>
+            <strong>Susan B. Anthony</strong> — lifelong partner; co-founded NWSA.<br><br>
+            <strong>Frederick Douglass</strong> — his support at Seneca Falls helped pass the suffrage resolution.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="height:230px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Obstacles She Faced</h3>
+            <p style="font-size:.8rem;color:var(--mid)">Resistance from every direction</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Society viewed women&rsquo;s public speaking as <strong>improper</strong>.
+            Abolitionists called women&rsquo;s rights a distraction.
+            The 14th Amendment added <strong>&ldquo;male&rdquo;</strong> to the Constitution for the first time.
+            Raising 7 children limited her time. Her husband&rsquo;s mental health added personal strain.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!--  TAB 3 — ACTION PLAN                            -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="plan">
+    <div class="sec-head reveal">
+      <div class="stage-num">Stage III</div>
+      <h2>Develop an Action Plan</h2>
+      <div class="sub">What did Stanton set out to do — and how?</div>
+    </div>
+
+    <div class="card-grid g2 reveal">
+      <!-- Goals -->
+      <div>
+        <div class="info-box">
+          <h4>Her Goals</h4>
+          <ul>
+            <li>Women&rsquo;s right to vote in all elections</li>
+            <li>Married women&rsquo;s right to own property &amp; wages</li>
+            <li>Women&rsquo;s right to retain custody of children</li>
+            <li>Reform of marriage and divorce law</li>
+            <li>Equal access to education</li>
+            <li>A federal constitutional amendment for equality</li>
+          </ul>
+        </div>
+        <p class="blurb reveal" style="margin-top:12px">
+          Stanton&rsquo;s vision went far beyond the ballot.
+          She wanted <strong>total legal equality</strong> — in property, education, marriage, and politics.
+        </p>
+      </div>
+
+      <!-- Strategies -->
+      <div>
+        <div class="info-box">
+          <h4>Her Strategies</h4>
+          <ul>
+            <li><strong>Conventions</strong> — large public gatherings to build momentum</li>
+            <li><strong>Writing &amp; Press</strong> — newspapers and pamphlets to spread ideas</li>
+            <li><strong>Petitioning Congress</strong> — formal lobbying for legislation</li>
+            <li><strong>Alliances</strong> — coalitions with abolitionists and reformers</li>
+            <li><strong>Legislative testimony</strong> — appearing before committees on specific bills</li>
+            <li><strong>State campaigns</strong> — building grassroots pressure for federal action</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid g3 reveal" style="margin-top:16px">
+      <div class="flip-card" style="height:180px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Target: Lawmakers</h3>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Stanton petitioned <strong>Congress directly</strong> and testified before state legislatures.
+            She pushed for constitutional amendments and specific reform bills.
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" style="height:180px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Target: The Public</h3>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Through <strong><em>The Revolution</em> newspaper</strong> and national speaking tours, she reached
+            thousands of ordinary Americans — making the case that women&rsquo;s rights were human rights.
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" style="height:180px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Target: Women</h3>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back">
+            Conventions, clubs, and reform societies <strong>organized women directly</strong> — giving them
+            a voice, a community, and a path to political action for the first time.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!--  TAB 4 — TAKE ACTION                            -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="action">
+    <div class="sec-head reveal">
+      <div class="stage-num">Stage IV</div>
+      <h2>Take Action</h2>
+      <div class="sub">Click any event to see what happened</div>
+    </div>
+
+    <ul class="timeline reveal">
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1840</span>
+        <span class="tl-title">World Anti-Slavery Convention, London</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          Stanton and other women delegates were refused recognition and forced to sit behind a curtain.
+          The experience revealed sexism within abolitionism itself and ignited Stanton&rsquo;s lifelong fight for women&rsquo;s rights.
+          She met Lucretia Mott here — a partnership that would change history.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1848</span>
+        <span class="tl-title">NY Married Women&rsquo;s Property Act</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          Stanton helped pass one of the first laws in U.S. history granting married women the right to own property.
+          Before this, everything a woman owned became her husband&rsquo;s upon marriage.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1848</span>
+        <span class="tl-title">Seneca Falls Convention</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          Co-organized with Lucretia Mott in Seneca Falls, NY, drawing ~300 attendees.
+          Stanton unveiled the <em>Declaration of Sentiments</em>, modeled on the Declaration of Independence,
+          arguing that &ldquo;all men and women are created equal.&rdquo;
+          Frederick Douglass&rsquo;s support helped pass the controversial suffrage resolution.
+          This event launched the organized women&rsquo;s rights movement.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1861</span>
+        <span class="tl-title">NY Divorce Reform Address</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          Stanton testified before the NY Senate Judiciary Committee, arguing that women trapped
+          in abusive marriages had no legal escape. She described domestic violence in detail
+          and called for a complete overhaul of marriage and divorce law — not just one bill.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1866</span>
+        <span class="tl-title">Petitions Congress for Women&rsquo;s Suffrage</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          Stanton objected to the 14th Amendment&rsquo;s use of &ldquo;male&rdquo; and petitioned Congress
+          for women&rsquo;s voting rights. Rep. George Julian proposed an amendment for voting rights
+          regardless of sex — but it was never even voted on.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1868</span>
+        <span class="tl-title">Launches <em>The Revolution</em></span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          Stanton started a weekly newspaper dedicated entirely to women&rsquo;s rights —
+          spreading the movement&rsquo;s ideas to thousands of readers across the country.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1869</span>
+        <span class="tl-title">Co-founds NWSA</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          With Susan B. Anthony, Stanton co-founded the National Woman Suffrage Association.
+          NWSA focused on a federal constitutional amendment, while the rival AWSA (Lucy Stone) pursued state-level strategies.
+        </div>
+      </li>
+
+      <li class="tl-item" onclick="this.classList.toggle('open')">
+        <div class="dot"></div>
+        <span class="tl-year">1890</span>
+        <span class="tl-title">NAWSA Formed</span>
+        <span class="tl-arrow">▶</span>
+        <div class="tl-detail">
+          The NWSA and AWSA merged into the National American Woman Suffrage Association.
+          Led by Stanton and Anthony, NAWSA combined state campaigns with federal advocacy — the strategy that ultimately won the vote.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!--  TAB 5 — REFLECT                                -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="reflect">
+    <div class="sec-head reveal">
+      <div class="stage-num">Stage V</div>
+      <h2>Reflect</h2>
+      <div class="sub">How effective was Stanton at bringing about change in 19th-century society?</div>
+    </div>
+
+    <div class="card-grid g2 reveal">
+      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Short-Term Wins</h3>
+            <p style="font-size:.8rem;color:var(--mid)">What she achieved in her lifetime</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back" style="font-size:.78rem">
+            <strong>1848 NY Property Act</strong> — married women could own property for the first time.<br><br>
+            <strong>Seneca Falls</strong> — placed women&rsquo;s rights permanently on the national agenda.<br><br>
+            <strong>NWSA → NAWSA</strong> — built the organizational infrastructure that carried the movement for 50+ years.<br><br>
+            Yet the 14th &amp; 15th Amendments excluded women. Congress ignored her petitions. She died in 1902 — 18 years before women won the vote.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Long-Term Legacy</h3>
+            <p style="font-size:.8rem;color:var(--mid)">How her work changed America forever</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back" style="font-size:.78rem">
+            The <strong>19th Amendment (1920)</strong> — the direct result of the movement she started.<br><br>
+            The <strong>Declaration of Sentiments</strong> remains one of the most important documents in American history.<br><br>
+            Her vision — property rights, divorce reform, educational equality — anticipated <strong>every major women&rsquo;s rights advance</strong> of the 20th century.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="rule-thin">
+
+    <div class="card-grid g2 reveal" style="margin-top:12px">
+      <div class="flip-card" style="height:220px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>What Could She Have Done Differently?</h3>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back" style="font-size:.78rem">
+            The movement struggled with <strong>racial exclusion</strong>. Black women activists like Mary Church Terrell
+            spoke out but remained marginalized. A broader, more inclusive coalition could have achieved change sooner.<br><br>
+            The <strong>NWSA/AWSA split</strong> divided the movement for over 20 years. Earlier reunification might have accelerated federal action.
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="height:220px" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <h3>Her Work Lives On Today</h3>
+            <p style="font-size:.8rem;color:var(--mid)">Modern connections</p>
+            <div class="hint">tap to learn more</div>
+          </div>
+          <div class="flip-back" style="font-size:.78rem">
+            The strategies she pioneered — <strong>conventions, media campaigns, legislative lobbying, coalitions</strong> — are
+            the exact tools used by movements like the <strong>Women&rsquo;s March</strong>, <strong>#MeToo</strong>,
+            and advocates for the <strong>Equal Rights Amendment</strong> today.<br><br>
+            Her insistence on structural, legal change over individual accommodation echoes in every modern civil rights movement.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote reveal" style="margin-top:18px">
+      <p>&ldquo;The prolonged slavery of women is the darkest page in human history.&rdquo;</p>
+      <span class="attr">— Elizabeth Cady Stanton</span>
+    </div>
+  </div>
+
+  <!-- ══ WORKS CONSULTED ══ -->
+  <div class="works-cited reveal">
+    <h3>Works Consulted</h3>
+    <p>&ldquo;Elizabeth Cady Stanton.&rdquo; <em>Britannica School</em>, school.eb.com/levels/high/article/Elizabeth-Cady-Stanton/69429.</p>
+    <p>Mountjoy, Shane, and Tim McNeese. <em>The Women&rsquo;s Rights Movement</em>. Infobase Publishing, 2007.</p>
+    <p>Stanton, Elizabeth Cady. <em>Elizabeth Cady Stanton Papers: Speeches and Writings, –1902; Speeches; 1861; 8 Feb., Address on Divorce Bill Before the Judiciary Committee, New York State Senate</em>. 1861. Manuscript/Mixed Material. Library of Congress, www.loc.gov/item/mss412100063/.</p>
+    <p>&ldquo;The Women&rsquo;s Rights Movement, 1848–1920.&rdquo; <em>US House of Representatives: History, Art &amp; Archives</em>, 2006, history.house.gov/Exhibitions-and-Publications/WIC/Historical-Essays/No-Lady/Womens-Rights/.</p>
+  </div>
+
+  <div class="footer">
+    <p>The Reform Gazette · United States History I · Shreyas Pokala, 2026</p>
+  </div>
+
+</div>
+
+<script>
+/* ── TAB SWITCHING ── */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    // re-trigger reveal animations in new tab
+    setTimeout(()=>{
+      document.querySelectorAll('.tab-panel.active .reveal').forEach(el=>{
+        el.classList.remove('visible');
+        void el.offsetWidth;
+        observer.observe(el);
+      });
+    },50);
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
