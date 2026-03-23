@@ -70,7 +70,7 @@
     .flip-card:hover .flip-front{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
     .flip-front h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px}
     .flip-front .hint{font-size:.7rem;color:var(--accent);font-style:italic;margin-top:8px;text-decoration:underline;text-underline-offset:2px}
-    .flip-front .hint::before{content:'↩ '}
+    .flip-front .hint::before{content:'';display:inline-block;width:6px;height:6px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);margin-right:6px;vertical-align:middle}
     /* FIX 4/5: no scrollbar inside flip-back */
     .flip-back{background:var(--rule);color:var(--paper);transform:rotateY(180deg);font-size:.82rem;line-height:1.55;overflow:hidden}
     .flip-back strong{color:var(--gold)}
@@ -85,8 +85,9 @@
     .tl-item.open .dot{background:var(--accent);transform:scale(1.25)}
     .tl-year{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--accent)}
     .tl-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;display:inline;margin-left:6px}
-    .tl-arrow{display:inline-block;margin-left:4px;font-size:.7rem;transition:transform .3s;color:var(--mid)}
-    .tl-item.open .tl-arrow{transform:rotate(90deg)}
+    .tl-arrow{display:inline-block;margin-left:6px;width:6px;height:6px;border-top:2px solid var(--mid);border-right:2px solid var(--mid);transform:rotate(45deg);transition:transform .3s;vertical-align:middle}
+    .tl-item.open .tl-arrow{transform:rotate(135deg)}
+    /* tl-arrow open state handled above */
     .tl-detail{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;font-size:.82rem;line-height:1.6;color:var(--mid);padding:0}
     .tl-item.open .tl-detail{max-height:200px;padding:6px 0 10px}
 
@@ -95,7 +96,7 @@
     .info-box h4{font-family:'Playfair Display',serif;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--rule);padding-bottom:4px;margin-bottom:8px;color:var(--accent)}
     .info-box ul{list-style:none;padding:0}
     .info-box li{font-size:.8rem;line-height:1.55;padding:3px 0 3px 14px;border-bottom:1px dotted #b0a080;position:relative}
-    .info-box li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem}
+    .info-box li::before{content:'';position:absolute;left:2px;top:9px;width:5px;height:5px;border-top:2px solid var(--accent);border-right:2px solid var(--accent);transform:rotate(45deg)}
     .info-box li:last-child{border-bottom:none}
 
     /* ── PULL QUOTE ── */
@@ -126,6 +127,16 @@
     /* ── FOOTER — FIX 1: full-width ── */
     .footer{text-align:center;font-family:'IM Fell English',serif;font-size:.7rem;color:var(--mid);padding:12px 24px;border-top:2px double var(--rule)}
 
+    /* ── INTRO SECTION ── */
+    .intro-wrap{border-bottom:3px solid var(--rule);background:var(--paper)}
+    .intro{max-width:900px;margin:0 auto;padding:24px 24px 20px;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+    .intro-img{flex:0 0 240px;max-width:240px}
+    .intro-img img{width:100%;height:auto;border:3px solid var(--rule);filter:sepia(.15)}
+    .intro-img .caption{font-family:'IM Fell English',serif;font-size:.68rem;color:var(--mid);text-align:center;margin-top:4px;font-style:italic}
+    .intro-text{flex:1;min-width:240px}
+    .intro-text h2{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;margin-bottom:8px;color:var(--ink)}
+    .intro-text p{font-size:.86rem;line-height:1.65;margin-bottom:10px}
+
     /* ── RESPONSIVE ── */
     @media(max-width:600px){
       .tab-btn{font-size:.6rem;padding:8px 4px;min-width:0;letter-spacing:.5px}
@@ -135,6 +146,8 @@
       .tl-item{padding-left:56px}
       .tl-item .dot{left:21px;width:16px;height:16px}
       .hero h1{font-size:1.5rem}
+      .intro{flex-direction:column;align-items:center;text-align:center}
+      .intro-img{flex:0 0 auto;max-width:200px}
       .stat{min-width:100px}
     }
   </style>
@@ -145,9 +158,9 @@
   <!-- ══ MASTHEAD ══ -->
   <header class="masthead">
     <div class="mast-top">
-      <span>Vol. I · No. 1</span>
-      <span>United States History I · Reform Research Project</span>
-      <span>Shreyas Pokala · 2026</span>
+      <span>Vol. I &mdash; No. 1</span>
+      <span>United States History I &mdash; Reform Research Project</span>
+      <span>Shreyas Pokala &mdash; 2026</span>
     </div>
     <div class="paper-name">The Reform Gazette</div>
     <div class="tagline">&ldquo;Dedicated to the truths that shall make us free&rdquo;</div>
@@ -175,13 +188,45 @@
     </div>
   </div>
 
+  <!-- ══ INTRODUCTION ══ -->
+  <div class="intro-wrap">
+    <div class="intro reveal">
+      <div class="intro-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Elizabeth_Cady_Stanton.jpg/440px-Elizabeth_Cady_Stanton.jpg" alt="Portrait of Elizabeth Cady Stanton, circa 1880"/>
+        <div class="caption">Elizabeth Cady Stanton, c. 1880</div>
+      </div>
+      <div class="intro-text">
+        <h2>Who Was Elizabeth Cady Stanton?</h2>
+        <p>
+          Elizabeth Cady Stanton (1815&ndash;1902) was one of the most influential leaders of the
+          American women&rsquo;s rights movement. Born in Johnstown, New York, she grew up witnessing
+          firsthand how the law treated women as second-class citizens &mdash; an injustice that would
+          fuel her lifelong crusade for equality.
+        </p>
+        <p>
+          A gifted writer, orator, and organizer, Stanton co-organized the landmark <strong>Seneca Falls
+          Convention</strong> in 1848 and authored the <strong>Declaration of Sentiments</strong>, a
+          revolutionary document demanding equal rights for women in property, education, marriage, and
+          the ballot. Alongside Susan B. Anthony, she co-founded the National Woman Suffrage Association
+          and spent over fifty years fighting for a constitutional amendment guaranteeing women the right
+          to vote.
+        </p>
+        <p>
+          Though she did not live to see it, the <strong>19th Amendment</strong> &mdash; ratified in 1920,
+          eighteen years after her death &mdash; was the direct result of the movement she helped build.
+          Her vision reshaped American law and society forever.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- ══ TAB NAV ══ -->
   <nav class="tab-nav" id="tab-nav" role="tablist">
-    <button class="tab-btn active" data-tab="issue" role="tab">I · Identify</button>
-    <button class="tab-btn" data-tab="research" role="tab">II · Research</button>
-    <button class="tab-btn" data-tab="plan" role="tab">III · Plan</button>
-    <button class="tab-btn" data-tab="action" role="tab">IV · Action</button>
-    <button class="tab-btn" data-tab="reflect" role="tab">V · Reflect</button>
+    <button class="tab-btn active" data-tab="issue" role="tab">I &mdash; Identify</button>
+    <button class="tab-btn" data-tab="research" role="tab">II &mdash; Research</button>
+    <button class="tab-btn" data-tab="plan" role="tab">III &mdash; Plan</button>
+    <button class="tab-btn" data-tab="action" role="tab">IV &mdash; Action</button>
+    <button class="tab-btn" data-tab="reflect" role="tab">V &mdash; Reflect</button>
   </nav>
 
   <!-- ════════════════════════════════════════════════ -->
@@ -422,6 +467,11 @@
         </div>
       </div>
     </div>
+
+    <div class="pull-quote reveal" style="margin-top:18px">
+      <p>&ldquo;The best protection any woman can have is courage.&rdquo;</p>
+      <span class="attr">&mdash; Elizabeth Cady Stanton</span>
+    </div>
   </div>
 
   <!-- ════════════════════════════════════════════════ -->
@@ -439,7 +489,7 @@
         <div class="dot"></div>
         <span class="tl-year">1840</span>
         <span class="tl-title">World Anti-Slavery Convention, London</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           Stanton and other women delegates were refused recognition and forced to sit behind a curtain.
           The experience revealed sexism within abolitionism itself and ignited Stanton&rsquo;s lifelong fight for women&rsquo;s rights.
@@ -451,7 +501,7 @@
         <div class="dot"></div>
         <span class="tl-year">1848</span>
         <span class="tl-title">NY Married Women&rsquo;s Property Act</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           Stanton helped pass one of the first laws in U.S. history granting married women the right to own property.
           Before this, everything a woman owned became her husband&rsquo;s upon marriage.
@@ -462,7 +512,7 @@
         <div class="dot"></div>
         <span class="tl-year">1848</span>
         <span class="tl-title">Seneca Falls Convention</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           Co-organized with Lucretia Mott in Seneca Falls, NY, drawing ~300 attendees.
           Stanton unveiled the <em>Declaration of Sentiments</em>, modeled on the Declaration of Independence,
@@ -476,7 +526,7 @@
         <div class="dot"></div>
         <span class="tl-year">1861</span>
         <span class="tl-title">NY Divorce Reform Address</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           Stanton testified before the NY Senate Judiciary Committee, arguing that women trapped
           in abusive marriages had no legal escape. She described domestic violence in detail
@@ -488,7 +538,7 @@
         <div class="dot"></div>
         <span class="tl-year">1866</span>
         <span class="tl-title">Petitions Congress for Women&rsquo;s Suffrage</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           Stanton objected to the 14th Amendment&rsquo;s use of &ldquo;male&rdquo; and petitioned Congress
           for women&rsquo;s voting rights. Rep. George Julian proposed an amendment for voting rights
@@ -500,7 +550,7 @@
         <div class="dot"></div>
         <span class="tl-year">1868</span>
         <span class="tl-title">Launches <em>The Revolution</em></span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           Stanton started a weekly newspaper dedicated entirely to women&rsquo;s rights —
           spreading the movement&rsquo;s ideas to thousands of readers across the country.
@@ -511,7 +561,7 @@
         <div class="dot"></div>
         <span class="tl-year">1869</span>
         <span class="tl-title">Co-founds NWSA</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           With Susan B. Anthony, Stanton co-founded the National Woman Suffrage Association.
           NWSA focused on a federal constitutional amendment, while the rival AWSA (Lucy Stone) pursued state-level strategies.
@@ -522,7 +572,7 @@
         <div class="dot"></div>
         <span class="tl-year">1890</span>
         <span class="tl-title">NAWSA Formed</span>
-        <span class="tl-arrow">&#9654;</span>
+        <span class="tl-arrow"></span>
         <div class="tl-detail">
           The NWSA and AWSA merged into the National American Woman Suffrage Association.
           Led by Stanton and Anthony, NAWSA combined state campaigns with federal advocacy — the strategy that ultimately won the vote.
@@ -614,7 +664,7 @@
   </div>
 
   <div class="footer">
-    <p>The Reform Gazette · United States History I · Shreyas Pokala, 2026</p>
+    <p>The Reform Gazette &mdash; United States History I &mdash; Shreyas Pokala, 2026</p>
   </div>
 
 </div>
