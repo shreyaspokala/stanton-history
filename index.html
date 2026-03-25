@@ -75,21 +75,35 @@
     .flip-back{background:var(--rule);color:var(--paper);transform:rotateY(180deg);font-size:.82rem;line-height:1.55;overflow:hidden}
     .flip-back strong{color:var(--gold)}
 
-    /* ── CLICKABLE TIMELINE ── */
-    .timeline{list-style:none;padding:0;position:relative;margin-top:10px}
-    .timeline::before{content:'';position:absolute;left:44px;top:0;bottom:0;width:3px;background:var(--rule)}
-    /* FIX 7: timeline item with transition for active bg */
-    .tl-item{position:relative;padding-left:76px;margin-bottom:6px;cursor:pointer;padding-top:4px;padding-bottom:4px;padding-right:8px;border-left:3px solid transparent;transition:background .3s,border-color .3s;border-radius:0 4px 4px 0}
-    .tl-item.open{background:rgba(122,26,16,.07);border-left-color:var(--accent)}
-    .tl-item .dot{position:absolute;left:37px;top:8px;width:18px;height:18px;border-radius:50%;background:var(--paper);border:3px solid var(--accent);transition:background .3s,transform .3s;z-index:2}
-    .tl-item.open .dot{background:var(--accent);transform:scale(1.25)}
-    .tl-year{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--accent)}
-    .tl-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;display:inline;margin-left:6px}
-    .tl-arrow{display:inline-block;margin-left:6px;width:6px;height:6px;border-top:2px solid var(--mid);border-right:2px solid var(--mid);transform:rotate(45deg);transition:transform .3s;vertical-align:middle}
-    .tl-item.open .tl-arrow{transform:rotate(135deg)}
-    /* tl-arrow open state handled above */
-    .tl-detail{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;font-size:.82rem;line-height:1.6;color:var(--mid);padding:0}
-    .tl-item.open .tl-detail{max-height:200px;padding:6px 0 10px}
+    /* ── INTERACTIVE HORIZONTAL TIMELINE ── */
+    .htl-wrap{overflow-x:auto;overflow-y:visible;padding:20px 0 30px;margin-top:10px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--rule) var(--paper-dk)}
+    .htl-wrap::-webkit-scrollbar{height:6px}
+    .htl-wrap::-webkit-scrollbar-track{background:var(--paper-dk);border-radius:3px}
+    .htl-wrap::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
+    .htl{display:flex;align-items:flex-start;position:relative;min-width:max-content;padding:0 30px}
+    /* the horizontal line */
+    .htl::before{content:'';position:absolute;top:54px;left:0;right:0;height:4px;background:var(--rule);border-radius:2px}
+    /* each stop on the timeline */
+    .htl-stop{position:relative;display:flex;flex-direction:column;align-items:center;width:110px;flex-shrink:0;cursor:pointer;z-index:2}
+    .htl-stop .year{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--accent);margin-bottom:8px;white-space:nowrap;transition:color .3s}
+    .htl-stop .node{width:22px;height:22px;border-radius:50%;background:var(--paper);border:4px solid var(--accent);transition:background .3s,transform .35s,box-shadow .3s;position:relative;z-index:3}
+    .htl-stop:hover .node{transform:scale(1.25);box-shadow:0 0 0 6px rgba(122,26,16,.12)}
+    .htl-stop.active .node{background:var(--accent);transform:scale(1.35);box-shadow:0 0 0 8px rgba(122,26,16,.18)}
+    .htl-stop .label{font-family:'IM Fell English',serif;font-size:.68rem;color:var(--mid);text-align:center;margin-top:10px;line-height:1.3;max-width:105px;transition:color .3s}
+    .htl-stop.active .year{color:var(--ink)}
+    .htl-stop.active .label{color:var(--ink);font-weight:600}
+    /* connector ticks */
+    .htl-stop::after{content:'';position:absolute;top:44px;width:2px;height:20px;background:var(--rule);z-index:1}
+    /* info panel that appears below the timeline */
+    .htl-info{margin-top:16px;border:2px solid var(--rule);background:var(--paper-dk);padding:0;max-height:0;overflow:hidden;transition:max-height .5s ease,padding .4s ease,opacity .4s ease;opacity:0;border-radius:4px}
+    .htl-info.open{max-height:300px;padding:18px 20px;opacity:1}
+    .htl-info .info-year{font-family:'Playfair Display',serif;font-weight:900;font-size:1.1rem;color:var(--accent);margin-bottom:2px}
+    .htl-info .info-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:8px;color:var(--ink)}
+    .htl-info .info-body{font-size:.85rem;line-height:1.65;color:var(--mid)}
+    .htl-info .info-body em{color:var(--ink)}
+    .htl-info .info-close{position:absolute;top:10px;right:14px;cursor:pointer;font-size:1.1rem;color:var(--mid);background:none;border:none;font-family:'Playfair Display',serif}
+    .htl-info .info-close:hover{color:var(--accent)}
+    .htl-hint{text-align:center;font-family:'IM Fell English',serif;font-size:.78rem;color:var(--mid);font-style:italic;margin-top:6px}
 
     /* ── INFO BOX ── */
     .info-box{border:2px solid var(--rule);padding:12px 14px;background:var(--paper-dk);margin-top:12px}
@@ -138,9 +152,10 @@
       .tab-btn{font-size:.6rem;padding:8px 4px;min-width:0;letter-spacing:.5px}
       .flip-card{height:190px}
       .g2{grid-template-columns:1fr}
-      .timeline::before{left:28px}
-      .tl-item{padding-left:56px}
-      .tl-item .dot{left:21px;width:16px;height:16px}
+      .htl-stop{width:90px}
+      .htl-stop .year{font-size:.72rem}
+      .htl-stop .label{font-size:.6rem}
+      .htl-info.open{padding:14px 16px}
       .hero h1{font-size:1.5rem}
       .intro p{text-align:center}
       .stat{min-width:100px}
@@ -474,101 +489,57 @@
       <div class="sub">Click any event to see what happened</div>
     </div>
 
-    <ul class="timeline reveal">
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1840</span>
-        <span class="tl-title">World Anti-Slavery Convention, London</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          Stanton and other women delegates were refused recognition and forced to sit behind a curtain.
-          The experience revealed sexism within abolitionism itself and ignited Stanton&rsquo;s lifelong fight for women&rsquo;s rights.
-          She met Lucretia Mott here — a partnership that would change history.
+    <div class="htl-wrap reveal">
+      <div class="htl" id="htl">
+        <div class="htl-stop" data-idx="0">
+          <span class="year">1840</span>
+          <div class="node"></div>
+          <span class="label">Anti-Slavery Convention</span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1848</span>
-        <span class="tl-title">NY Married Women&rsquo;s Property Act</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          Stanton helped pass one of the first laws in U.S. history granting married women the right to own property.
-          Before this, everything a woman owned became her husband&rsquo;s upon marriage.
+        <div class="htl-stop" data-idx="1">
+          <span class="year">1848</span>
+          <div class="node"></div>
+          <span class="label">Property Act</span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1848</span>
-        <span class="tl-title">Seneca Falls Convention</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          Co-organized with Lucretia Mott in Seneca Falls, NY, drawing ~300 attendees.
-          Stanton unveiled the <em>Declaration of Sentiments</em>, modeled on the Declaration of Independence,
-          arguing that &ldquo;all men and women are created equal.&rdquo;
-          Frederick Douglass&rsquo;s support helped pass the controversial suffrage resolution.
-          This event launched the organized women&rsquo;s rights movement.
+        <div class="htl-stop" data-idx="2">
+          <span class="year">1848</span>
+          <div class="node"></div>
+          <span class="label">Seneca Falls</span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1861</span>
-        <span class="tl-title">NY Divorce Reform Address</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          Stanton testified before the NY Senate Judiciary Committee, arguing that women trapped
-          in abusive marriages had no legal escape. She described domestic violence in detail
-          and called for a complete overhaul of marriage and divorce law — not just one bill.
+        <div class="htl-stop" data-idx="3">
+          <span class="year">1861</span>
+          <div class="node"></div>
+          <span class="label">Divorce Reform</span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1866</span>
-        <span class="tl-title">Petitions Congress for Women&rsquo;s Suffrage</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          Stanton objected to the 14th Amendment&rsquo;s use of &ldquo;male&rdquo; and petitioned Congress
-          for women&rsquo;s voting rights. Rep. George Julian proposed an amendment for voting rights
-          regardless of sex — but it was never even voted on.
+        <div class="htl-stop" data-idx="4">
+          <span class="year">1866</span>
+          <div class="node"></div>
+          <span class="label">Petitions Congress</span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1868</span>
-        <span class="tl-title">Launches <em>The Revolution</em></span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          Stanton started a weekly newspaper dedicated entirely to women&rsquo;s rights —
-          spreading the movement&rsquo;s ideas to thousands of readers across the country.
+        <div class="htl-stop" data-idx="5">
+          <span class="year">1868</span>
+          <div class="node"></div>
+          <span class="label"><em>The Revolution</em></span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1869</span>
-        <span class="tl-title">Co-founds NWSA</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          With Susan B. Anthony, Stanton co-founded the National Woman Suffrage Association.
-          NWSA focused on a federal constitutional amendment, while the rival AWSA (Lucy Stone) pursued state-level strategies.
+        <div class="htl-stop" data-idx="6">
+          <span class="year">1869</span>
+          <div class="node"></div>
+          <span class="label">Co-founds NWSA</span>
         </div>
-      </li>
-
-      <li class="tl-item" onclick="this.classList.toggle('open')">
-        <div class="dot"></div>
-        <span class="tl-year">1890</span>
-        <span class="tl-title">NAWSA Formed</span>
-        <span class="tl-arrow"></span>
-        <div class="tl-detail">
-          The NWSA and AWSA merged into the National American Woman Suffrage Association.
-          Led by Stanton and Anthony, NAWSA combined state campaigns with federal advocacy — the strategy that ultimately won the vote.
+        <div class="htl-stop" data-idx="7">
+          <span class="year">1890</span>
+          <div class="node"></div>
+          <span class="label">NAWSA Formed</span>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+    <p class="htl-hint reveal">Scroll to explore &mdash; click any event to learn more</p>
+    <div class="htl-info reveal" id="htl-info" style="position:relative">
+      <button class="info-close" onclick="closeInfo()">&times;</button>
+      <div class="info-year" id="htl-info-year"></div>
+      <div class="info-title" id="htl-info-title"></div>
+      <div class="info-body" id="htl-info-body"></div>
+    </div>
   </div>
 
   <!-- ════════════════════════════════════════════════ -->
@@ -688,6 +659,41 @@ const observer=new IntersectionObserver((entries)=>{
   });
 },{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ── HORIZONTAL TIMELINE ── */
+const htlData=[
+  {year:'1840',title:'World Anti-Slavery Convention, London',body:'Stanton and other women delegates were refused recognition and forced to sit behind a curtain. The experience revealed sexism within abolitionism itself and ignited Stanton\u2019s lifelong fight for women\u2019s rights. She met Lucretia Mott here \u2014 a partnership that would change history.'},
+  {year:'1848',title:'NY Married Women\u2019s Property Act',body:'Stanton helped pass one of the first laws in U.S. history granting married women the right to own property. Before this, everything a woman owned became her husband\u2019s upon marriage.'},
+  {year:'1848',title:'Seneca Falls Convention',body:'Co-organized with Lucretia Mott in Seneca Falls, NY, drawing ~300 attendees. Stanton unveiled the <em>Declaration of Sentiments</em>, modeled on the Declaration of Independence, arguing that \u201call men and women are created equal.\u201d Frederick Douglass\u2019s support helped pass the controversial suffrage resolution. This event launched the organized women\u2019s rights movement.'},
+  {year:'1861',title:'NY Divorce Reform Address',body:'Stanton testified before the NY Senate Judiciary Committee, arguing that women trapped in abusive marriages had no legal escape. She described domestic violence in detail and called for a complete overhaul of marriage and divorce law \u2014 not just one bill.'},
+  {year:'1866',title:'Petitions Congress for Women\u2019s Suffrage',body:'Stanton objected to the 14th Amendment\u2019s use of \u201cmale\u201d and petitioned Congress for women\u2019s voting rights. Rep. George Julian proposed an amendment for voting rights regardless of sex \u2014 but it was never even voted on.'},
+  {year:'1868',title:'Launches <em>The Revolution</em>',body:'Stanton started a weekly newspaper dedicated entirely to women\u2019s rights \u2014 spreading the movement\u2019s ideas to thousands of readers across the country.'},
+  {year:'1869',title:'Co-founds NWSA',body:'With Susan B. Anthony, Stanton co-founded the National Woman Suffrage Association. NWSA focused on a federal constitutional amendment, while the rival AWSA (Lucy Stone) pursued state-level strategies.'},
+  {year:'1890',title:'NAWSA Formed',body:'The NWSA and AWSA merged into the National American Woman Suffrage Association. Led by Stanton and Anthony, NAWSA combined state campaigns with federal advocacy \u2014 the strategy that ultimately won the vote.'}
+];
+const htlInfo=document.getElementById('htl-info');
+const htlStops=document.querySelectorAll('.htl-stop');
+let activeStop=-1;
+function openInfo(idx){
+  const d=htlData[idx];
+  if(activeStop===idx){closeInfo();return}
+  htlStops.forEach(s=>s.classList.remove('active'));
+  htlStops[idx].classList.add('active');
+  activeStop=idx;
+  document.getElementById('htl-info-year').textContent=d.year;
+  document.getElementById('htl-info-title').innerHTML=d.title;
+  document.getElementById('htl-info-body').innerHTML=d.body;
+  htlInfo.classList.add('open');
+  htlInfo.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function closeInfo(){
+  htlStops.forEach(s=>s.classList.remove('active'));
+  htlInfo.classList.remove('open');
+  activeStop=-1;
+}
+htlStops.forEach(stop=>{
+  stop.addEventListener('click',()=>openInfo(parseInt(stop.dataset.idx)));
+});
 </script>
 </body>
 </html>
