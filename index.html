@@ -105,6 +105,16 @@
     .htl-info .info-close:hover{color:var(--accent)}
     .htl-hint{text-align:center;font-family:'IM Fell English',serif;font-size:.78rem;color:var(--mid);font-style:italic;margin-top:6px}
 
+    /* ── OBSTACLE CARDS ── */
+    .obs-list{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+    .obs-card{border:2px solid var(--rule);border-left:6px solid var(--accent);background:var(--paper-dk);padding:18px 20px;border-radius:0 4px 4px 0;transition:transform .25s,box-shadow .25s}
+    .obs-card:hover{transform:translateX(4px);box-shadow:4px 4px 0 rgba(58,42,16,.12)}
+    .obs-card .obs-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .obs-card .obs-icon{font-size:1.4rem;flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:2px solid var(--rule);border-radius:50%;background:var(--paper)}
+    .obs-card h3{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:var(--ink);margin:0}
+    .obs-card p{font-size:.84rem;line-height:1.65;color:var(--mid);margin:0}
+    .obs-card p strong{color:var(--ink)}
+
     /* ── INFO BOX ── */
     .info-box{border:2px solid var(--rule);padding:12px 14px;background:var(--paper-dk);margin-top:12px}
     .info-box h4{font-family:'Playfair Display',serif;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--rule);padding-bottom:4px;margin-bottom:8px;color:var(--accent)}
@@ -490,63 +500,53 @@
       <div class="sub">The forces that fought against Stanton and the movement</div>
     </div>
 
-    <div class="card-grid g2 reveal">
-      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <h3>Legal Barriers</h3>
-            <div class="hint">tap to learn more</div>
-          </div>
-          <div class="flip-back">Under <strong>coverture</strong>, married women had no legal identity separate from their husbands. They could not own property, sign contracts, or keep their own wages. Changing laws meant convincing the very men who benefited from keeping them in place.</div>
+    <div class="obs-list reveal">
+      <div class="obs-card">
+        <div class="obs-head">
+          <div class="obs-icon">&sect;</div>
+          <h3>Legal Barriers</h3>
         </div>
+        <p>Under <strong>coverture</strong>, married women had no legal identity separate from their husbands. They could not own property, sign contracts, or keep their own wages. Changing these laws meant convincing the very men who benefited from keeping them in place.</p>
       </div>
-      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <h3>Social Opposition</h3>
-            <div class="hint">tap to learn more</div>
-          </div>
-          <div class="flip-back">Society viewed women who spoke publicly as <strong>improper and unfeminine</strong>. Newspapers mocked the Seneca Falls Convention. Ministers cited scripture to argue women belonged in the home. Even many women opposed the movement, fearing social consequences.</div>
-        </div>
-      </div>
-      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <h3>The 14th Amendment Setback</h3>
-            <div class="hint">tap to learn more</div>
-          </div>
-          <div class="flip-back">The 14th Amendment (1868) introduced the word <strong>&ldquo;male&rdquo;</strong> into the Constitution for the first time. Former allies told women to wait their turn, calling it <strong>&ldquo;the Negro&rsquo;s hour.&rdquo;</strong> This split the reform coalition and set back women&rsquo;s suffrage by decades.</div>
-        </div>
-      </div>
-      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <h3>Movement Division</h3>
-            <div class="hint">tap to learn more</div>
-          </div>
-          <div class="flip-back">The <strong>NWSA/AWSA split</strong> (1869&ndash;1890) divided the movement for over 20 years. Stanton&rsquo;s NWSA pursued a federal amendment while AWSA focused on state campaigns. The rivalry drained resources and slowed progress until their merger in 1890.</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="card-grid g2 reveal" style="margin-top:16px">
-      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <h3>Personal Sacrifices</h3>
-            <div class="hint">tap to learn more</div>
-          </div>
-          <div class="flip-back">Stanton raised <strong>seven children</strong> while leading a national movement. Her husband Henry&rsquo;s mental health struggles added personal strain. She was often confined to domestic duties for years at a time, relying on correspondence and writing to stay active in the cause.</div>
+      <div class="obs-card">
+        <div class="obs-head">
+          <div class="obs-icon">&para;</div>
+          <h3>Social Opposition</h3>
         </div>
+        <p>Society viewed women who spoke publicly as <strong>improper and unfeminine</strong>. Newspapers mocked the Seneca Falls Convention. Ministers cited scripture to argue women belonged in the home. Even many women opposed the movement, fearing social consequences.</p>
       </div>
-      <div class="flip-card" style="height:240px" onclick="this.classList.toggle('flipped')">
-        <div class="flip-card-inner">
-          <div class="flip-front">
-            <h3>Racial Exclusion</h3>
-            <div class="hint">tap to learn more</div>
-          </div>
-          <div class="flip-back">The movement struggled with <strong>racial exclusion</strong>. Black women activists like Sojourner Truth and Mary Church Terrell contributed enormously but remained marginalized. Stanton herself made controversial statements that prioritized white women&rsquo;s suffrage, weakening potential alliances.</div>
+
+      <div class="obs-card">
+        <div class="obs-head">
+          <div class="obs-icon">&dagger;</div>
+          <h3>The 14th Amendment Setback</h3>
         </div>
+        <p>The 14th Amendment (1868) introduced the word <strong>&ldquo;male&rdquo;</strong> into the Constitution for the first time. Former allies told women to wait their turn, calling it <strong>&ldquo;the Negro&rsquo;s hour.&rdquo;</strong> This split the reform coalition and set back women&rsquo;s suffrage by decades.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-head">
+          <div class="obs-icon">&divide;</div>
+          <h3>Movement Division</h3>
+        </div>
+        <p>The <strong>NWSA/AWSA split</strong> (1869&ndash;1890) divided the movement for over 20 years. Stanton&rsquo;s NWSA pursued a federal amendment while AWSA focused on state campaigns. The rivalry drained resources and slowed progress until their merger in 1890.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-head">
+          <div class="obs-icon">&hearts;</div>
+          <h3>Personal Sacrifices</h3>
+        </div>
+        <p>Stanton raised <strong>seven children</strong> while leading a national movement. Her husband Henry&rsquo;s mental health struggles added personal strain. She was often confined to domestic duties for years at a time, relying on correspondence and writing to stay active in the cause.</p>
+      </div>
+
+      <div class="obs-card">
+        <div class="obs-head">
+          <div class="obs-icon">&amp;</div>
+          <h3>Racial Exclusion</h3>
+        </div>
+        <p>The movement struggled with <strong>racial exclusion</strong>. Black women activists like Sojourner Truth and Mary Church Terrell contributed enormously but remained marginalized. Stanton herself made controversial statements that prioritized white women&rsquo;s suffrage, weakening potential alliances.</p>
       </div>
     </div>
 
