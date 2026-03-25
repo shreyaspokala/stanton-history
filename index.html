@@ -82,18 +82,18 @@
     .htl-wrap::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
     .htl{display:flex;align-items:flex-start;position:relative;min-width:max-content;padding:0 30px}
     /* the horizontal line */
-    .htl::before{content:'';position:absolute;top:54px;left:0;right:0;height:4px;background:var(--rule);border-radius:2px}
+    .htl::before{content:'';position:absolute;top:60px;left:0;right:0;height:4px;background:var(--rule);border-radius:2px}
     /* each stop on the timeline */
     .htl-stop{position:relative;display:flex;flex-direction:column;align-items:center;width:110px;flex-shrink:0;cursor:pointer;z-index:2}
-    .htl-stop .year{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--accent);margin-bottom:8px;white-space:nowrap;transition:color .3s}
+    .htl-stop .year{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:var(--accent);margin-bottom:14px;white-space:nowrap;transition:color .3s}
     .htl-stop .node{width:22px;height:22px;border-radius:50%;background:var(--paper);border:4px solid var(--accent);transition:background .3s,transform .35s,box-shadow .3s;position:relative;z-index:3}
     .htl-stop:hover .node{transform:scale(1.25);box-shadow:0 0 0 6px rgba(122,26,16,.12)}
     .htl-stop.active .node{background:var(--accent);transform:scale(1.35);box-shadow:0 0 0 8px rgba(122,26,16,.18)}
-    .htl-stop .label{font-family:'IM Fell English',serif;font-size:.68rem;color:var(--mid);text-align:center;margin-top:10px;line-height:1.3;max-width:105px;transition:color .3s}
+    .htl-stop .label{font-family:'IM Fell English',serif;font-size:.68rem;color:var(--mid);text-align:center;margin-top:18px;line-height:1.3;max-width:105px;transition:color .3s}
     .htl-stop.active .year{color:var(--ink)}
     .htl-stop.active .label{color:var(--ink);font-weight:600}
     /* connector ticks */
-    .htl-stop::after{content:'';position:absolute;top:44px;width:2px;height:20px;background:var(--rule);z-index:1}
+    .htl-stop::after{content:'';position:absolute;top:50px;width:2px;height:20px;background:var(--rule);z-index:1}
     /* info panel that appears below the timeline */
     .htl-info{margin-top:16px;border:2px solid var(--rule);background:var(--paper-dk);padding:0;max-height:0;overflow:hidden;transition:max-height .5s ease,padding .4s ease,opacity .4s ease;opacity:0;border-radius:4px}
     .htl-info.open{max-height:300px;padding:18px 20px;opacity:1}
@@ -229,8 +229,8 @@
     <button class="tab-btn active" data-tab="issue" role="tab">I &mdash; Identify</button>
     <button class="tab-btn" data-tab="research" role="tab">II &mdash; Research</button>
     <button class="tab-btn" data-tab="plan" role="tab">III &mdash; Plan</button>
-    <button class="tab-btn" data-tab="action" role="tab">IV &mdash; Action</button>
-    <button class="tab-btn" data-tab="obstacles" role="tab">V &mdash; Obstacles</button>
+    <button class="tab-btn" data-tab="obstacles" role="tab">IV &mdash; Obstacles</button>
+    <button class="tab-btn" data-tab="action" role="tab">V &mdash; Action</button>
     <button class="tab-btn" data-tab="reflect" role="tab">VI &mdash; Reflect</button>
   </nav>
 
@@ -481,79 +481,11 @@
   </div>
 
   <!-- ════════════════════════════════════════════════ -->
-  <!--  TAB 4 — TAKE ACTION                            -->
-  <!-- ════════════════════════════════════════════════ -->
-  <div class="tab-panel" id="action">
-    <div class="sec-head reveal">
-      <div class="stage-num">Stage IV</div>
-      <h2>Take Action</h2>
-      <div class="sub">Click any event to see what happened</div>
-    </div>
-
-    <div class="htl-wrap reveal">
-      <div class="htl" id="htl">
-        <div class="htl-stop" data-idx="0">
-          <span class="year">1840</span>
-          <div class="node"></div>
-          <span class="label">Anti-Slavery Convention</span>
-        </div>
-        <div class="htl-stop" data-idx="1">
-          <span class="year">1848</span>
-          <div class="node"></div>
-          <span class="label">Property Act</span>
-        </div>
-        <div class="htl-stop" data-idx="2">
-          <span class="year">1848</span>
-          <div class="node"></div>
-          <span class="label">Seneca Falls</span>
-        </div>
-        <div class="htl-stop" data-idx="3">
-          <span class="year">1861</span>
-          <div class="node"></div>
-          <span class="label">Divorce Reform</span>
-        </div>
-        <div class="htl-stop" data-idx="4">
-          <span class="year">1866</span>
-          <div class="node"></div>
-          <span class="label">Petitions Congress</span>
-        </div>
-        <div class="htl-stop" data-idx="5">
-          <span class="year">1868</span>
-          <div class="node"></div>
-          <span class="label"><em>The Revolution</em></span>
-        </div>
-        <div class="htl-stop" data-idx="6">
-          <span class="year">1869</span>
-          <div class="node"></div>
-          <span class="label">Co-founds NWSA</span>
-        </div>
-        <div class="htl-stop" data-idx="7">
-          <span class="year">1890</span>
-          <div class="node"></div>
-          <span class="label">NAWSA Formed</span>
-        </div>
-        <div class="htl-stop" data-idx="8">
-          <span class="year">1910s</span>
-          <div class="node"></div>
-          <span class="label">States Grant Suffrage</span>
-        </div>
-      </div>
-    </div>
-    <p class="htl-hint reveal">Scroll to explore &mdash; click any event to learn more</p>
-    <div class="htl-info reveal" id="htl-info" style="position:relative">
-      <button class="info-close" onclick="closeInfo()">&times;</button>
-      <div class="info-year" id="htl-info-year"></div>
-      <div class="info-title" id="htl-info-title"></div>
-      <div class="info-body" id="htl-info-body"></div>
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════════════════ -->
-  <!--  TAB 5 — OBSTACLES                              -->
+  <!--  TAB 4 — OBSTACLES                              -->
   <!-- ════════════════════════════════════════════════ -->
   <div class="tab-panel" id="obstacles">
     <div class="sec-head reveal">
-      <div class="stage-num">Stage V</div>
+      <div class="stage-num">Stage IV</div>
       <h2>Obstacles Faced</h2>
       <div class="sub">The forces that fought against Stanton and the movement</div>
     </div>
@@ -621,6 +553,74 @@
     <div class="pull-quote reveal" style="margin-top:18px">
       <p>&ldquo;We are sowing winter wheat, which the coming spring will see sprout and which other hands than ours will reap and enjoy.&rdquo;</p>
       <span class="attr">&mdash; Elizabeth Cady Stanton, reflecting on the slow pace of reform</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!--  TAB 5 — TAKE ACTION                            -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="action">
+    <div class="sec-head reveal">
+      <div class="stage-num">Stage V</div>
+      <h2>Take Action</h2>
+      <div class="sub">Click any event to see what happened</div>
+    </div>
+
+    <div class="htl-wrap reveal">
+      <div class="htl" id="htl">
+        <div class="htl-stop" data-idx="0">
+          <span class="year">1840</span>
+          <div class="node"></div>
+          <span class="label">Anti-Slavery Convention</span>
+        </div>
+        <div class="htl-stop" data-idx="1">
+          <span class="year">1848</span>
+          <div class="node"></div>
+          <span class="label">Property Act</span>
+        </div>
+        <div class="htl-stop" data-idx="2">
+          <span class="year">1848</span>
+          <div class="node"></div>
+          <span class="label">Seneca Falls</span>
+        </div>
+        <div class="htl-stop" data-idx="3">
+          <span class="year">1861</span>
+          <div class="node"></div>
+          <span class="label">Divorce Reform</span>
+        </div>
+        <div class="htl-stop" data-idx="4">
+          <span class="year">1866</span>
+          <div class="node"></div>
+          <span class="label">Petitions Congress</span>
+        </div>
+        <div class="htl-stop" data-idx="5">
+          <span class="year">1868</span>
+          <div class="node"></div>
+          <span class="label"><em>The Revolution</em></span>
+        </div>
+        <div class="htl-stop" data-idx="6">
+          <span class="year">1869</span>
+          <div class="node"></div>
+          <span class="label">Co-founds NWSA</span>
+        </div>
+        <div class="htl-stop" data-idx="7">
+          <span class="year">1890</span>
+          <div class="node"></div>
+          <span class="label">NAWSA Formed</span>
+        </div>
+        <div class="htl-stop" data-idx="8">
+          <span class="year">1910s</span>
+          <div class="node"></div>
+          <span class="label">States Grant Suffrage</span>
+        </div>
+      </div>
+    </div>
+    <p class="htl-hint reveal">Scroll to explore &mdash; click any event to learn more</p>
+    <div class="htl-info reveal" id="htl-info" style="position:relative">
+      <button class="info-close" onclick="closeInfo()">&times;</button>
+      <div class="info-year" id="htl-info-year"></div>
+      <div class="info-title" id="htl-info-title"></div>
+      <div class="info-body" id="htl-info-body"></div>
     </div>
   </div>
 
