@@ -139,7 +139,7 @@
     .stat .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--mid);margin-top:2px}
 
     /* ── SCROLL ANIMATION ── */
-    .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(0.22,1,0.36,1),transform .7s cubic-bezier(0.22,1,0.36,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
 
     /* ── WORKS CITED — FIX 1: full-width bg ── */
@@ -734,10 +734,17 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 });
 
-/* ── SCROLL REVEAL ── */
+/* ── SCROLL REVEAL WITH STAGGER ── */
 const observer=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}
+    if(e.isIntersecting){
+      const parent=e.target.parentElement;
+      const siblings=parent?Array.from(parent.children).filter(c=>c.classList.contains('reveal')):[];
+      const idx=siblings.indexOf(e.target);
+      const delay=idx>0?idx*100:0;
+      setTimeout(()=>e.target.classList.add('visible'),delay);
+      observer.unobserve(e.target);
+    }
   });
 },{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
